@@ -29,3 +29,11 @@
 ul.theList {
 	padding: 40;
 }
+
+.todoMain .dropList button {
+	padding: 10px;
+	font-size: 16px;
+	margin: 10px;
+	margin-right: 0px;
+	border: 2px solid #FFF;
+}

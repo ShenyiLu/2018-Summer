@@ -57,6 +57,11 @@ class Todo extends Component {
 				</div>
 				<TodoItems entries = {this.state.items}
 					delete = {this.deleteItem}/>
+				<div className="dropList">
+					<form>					
+					<button type = "submit">Drop Todo List</button>
+					</form>
+				</div>
 			</div>
 		);
 	}

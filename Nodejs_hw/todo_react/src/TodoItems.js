@@ -14,6 +14,10 @@ class TodoItems extends Component {
   	 key = {item.key}>{item.text}</li>
   }
 
+  update(complete) {
+  	
+  }
+
   delete(key) {
   	this.props.delete(key);
   }
