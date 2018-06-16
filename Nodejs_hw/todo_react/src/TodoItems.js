@@ -1,36 +1,32 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-class TodoItems extends React.Component {
+class TodoItems extends Component {
+
   constructor(props) {
-    super(props);
-    this.state = { items: [], text: '' };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  	super(props);
+
+  	this.createTasks = this.createTasks.bind(this);
   }
 
+  createTasks(item) {
+  	return <li onClick = {() => this.delete(item.key)}
+  	 key = {item.key}>{item.text}</li>
+  }
 
+  delete(key) {
+  	this.props.delete(key);
+  }
 
-  render() {
-    return (
-      <div>
-        <h3>TODO</h3>
-        <TodoList items={this.state.items} />
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="new-todo">
-            What needs to be done?
-          </label>
-          <input
-            id="new-todo"
-            onChange={this.handleChange}
-            value={this.state.text}
-          />
-          <button>
-            Add #{this.state.items.length + 1}
-          </button>
-        </form>
-      </div>
-    );
+  render(){
+  	var todoEntries = this.props.entries;
+  	var listItems = todoEntries.map(this.createTasks);
+
+  	return (
+  		<ul className="theList">
+  		{listItems}
+  		</ul>
+  	);
   }
 }
 

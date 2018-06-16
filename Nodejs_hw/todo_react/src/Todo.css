@@ -1,0 +1,31 @@
+.todoMain .header input {
+	padding:10px;
+	font-size:16px;
+	border: 2px solid ;
+	width: 165px;
+}
+
+.todoMain .header button {
+	padding: 10px;
+	font-size: 16px;
+	margin: 10px;
+	margin-right: 0px;
+	border: 2px solid #FFF;
+}
+
+/* Actually work properly. some other problem here*/
+/* have to make it look better */
+
+.todoMain .theList li {
+	color: #444;
+	background-color: rgba(15, 205, 255, .5);
+	padding: 15px;
+	margin-bottom: 15px;
+	border: 2px solid ;
+	border-radius: 5px;
+	list-style: none; 
+}
+
+ul.theList {
+	padding: 40;
+}
