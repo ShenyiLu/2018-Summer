@@ -10,7 +10,7 @@ class TodoItem extends Component {
         todoItems: [],
         curTodo: props.curTodo,
         text: '',
-        complete: ''
+        complete: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +24,8 @@ class TodoItem extends Component {
       .then(
         (result) => {
           this.setState({
-              todoItems: result.data.todoItems
+              todoItems: result.data.todoItems,
+              complete: result.data.complete
           });
         }
       )
@@ -57,21 +58,19 @@ class TodoItem extends Component {
     axios.delete(apiUrl + this.state.curTodo.id + '/items/' + id)
     .then()
     .catch(err => console.log(err))  
-
     this.setState({todoItems: this.state.todoItems.filter((todoItem) => { 
         return todoItem.id !== id 
     })})
   }
 
-  updateTodoItem = (id) => {
+  updateTodoItem = (id, bool) => {
     axios.put(apiUrl + this.state.curTodo.id + '/items/' + id, {
-        complete:true
+        complete:(!bool)
     })
     .then(res => console.log(res))
     .catch(err => console.log(err))  
-    this.setState({todoItems: this.state.todoItems.filter((todoItem) => { 
-        return todoItem.id !== id
-    })})
+    this.setState(function(state){return {complete:(!bool)}})
+    this.forceUpdate()
   }
   
   render() {
@@ -85,7 +84,7 @@ class TodoItem extends Component {
                 (<li key={todoItem.id}>
                     {todoItem.content} {"Status:"} {todoItem.complete ? 'Complete' : 'Incomplete'}
                     <button onClick={this.removeTodoItem.bind(this, todoItem.id)}>delete</button>
-                    <button onClick={this.updateTodoItem.bind(this, todoItem.id)}>update</button>
+                    <button onClick={this.updateTodoItem.bind(this, todoItem.id, todoItem.complete)}>update</button>
                 </li>
             ))}
             <form onSubmit={this.handleSubmit}>
