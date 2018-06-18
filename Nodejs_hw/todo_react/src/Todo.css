@@ -16,7 +16,7 @@
 /* Actually work properly. some other problem here*/
 /* have to make it look better */
 
-.todoMain .theList li {
+.todoMain .todoList li {
 	color: #444;
 	background-color: rgba(15, 205, 255, .5);
 	padding: 15px;
@@ -26,14 +26,21 @@
 	list-style: none; 
 }
 
-ul.theList {
-	padding: 40;
+ul.todoList {
+	padding: 40px;
 }
 
-.todoMain .dropList button {
+.todoMain .todoList input {
+	padding:10px;
+	font-size:16px;
+	border: 2px solid ;
+	width: 165px;
+}
+
+.todoMain .todoList button {
 	padding: 10px;
 	font-size: 16px;
 	margin: 10px;
 	margin-right: 0px;
-	border: 2px solid #FFF;
+	border: 2px solid;
 }

@@ -1,67 +1,115 @@
 import React, { Component } from 'react';
-import TodoItems from './TodoItems';
-import "./Todo.css";
-
-//const apiUrl = "http://localhost:8000/api/todos";
+import axios from 'axios';
+import TodoItem from './TodoItem'
+import './Todo.css'
+const apiUrl = 'http://localhost:8000/api/todos/';
 
 class Todo extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { items: [], text: '' };
-		this.addItem = this.addItem.bind(this);
-		this.deleteItem = this.deleteItem.bind(this);
+		this.state = {
+			TodoJson:[{
+				id:Number,
+				title: '',
+				createdAt:'',
+				updatedAt:''
+			}]
+		};
+    	this.createTodoList = this.createTodoList.bind(this);
+    	this.submitTodoList = this.submitTodoList.bind(this);
+    	this.removeTodoList = this.removeTodoList.bind(this);
+    	this.updateTodoList = this.updateTodoList.bind(this);
 	}
 
-	addItem(e) {
-		// would need link this to last week's job later
-		if (this._inputElement.value !== "") {
-			var newItem = {
-				text: this._inputElement.value,
-				key: Date.now()
-			};
-
-			this.setState((prevState) => {
-				return {
-					items: prevState.items.concat(newItem)
-				};
-			});
-
-			this._inputElement.value = "";
-			console.log(this.state.items);
-			e.preventDefault();
-
-		}
+	componentDidMount = () => {
+		axios.get(apiUrl)
+		.then(
+			(result) => {
+				this.setState({
+					TodoJson: result.data
+				})
+			}
+		)
+		.catch(err => console.log(err))
 	}
 
-	deleteItem(key) {
-		var filteredItems = this.state.items.filter(function (item){
-			return (item.key !== key)
-		});
+	createTodoList = (e) => {
+    	this.setState({ text: e.target.value });
+  	}
 
-		this.setState({
-			items: filteredItems
-		});
-	}
+  	submitTodoList = (e) => {
+  		axios.post(apiUrl, {
+  			title: this.state.text,
+  			'Content-Type': 'application/x-www-form-urlencoded'
+  		})
+  		.then(
+  			res => res.json())
+  		.then(
+  			(result) => {
+  				this.setState({
+  					TodoJson: result
+  				});
+  			})
+  		.catch(err => console.log(err))  
+  	}
+
+  	removeTodoList = (id) => {
+  		axios.delete(apiUrl + id, {
+  			todoId:id
+  		})
+  		.then()
+  		.catch(err => console.log(err))  
+
+  		this.setState({TodoJson: this.state.TodoJson.filter((todo) => 
+  			{ return todo.id !== id })
+  		})
+  	}
+
+  	updateTodoList = (id, newTitle) => {
+  		if(!newTitle) return;
+  		axios.put(apiUrl + id, {
+  			todoId:id,
+  			title:newTitle
+  		})
+  		.then(res => console.log(res))
+  		.catch(err => console.log(err))  
+  		this.setState({TodoJson: this.state.TodoJson.filter((todo) => 
+  			{ return todo.id !== id ? todo : todo.title = newTitle})
+  		})
+  	}
 
 	render() {
 		return (
 			<div className="todoMain">
 				<div className="header">
-					<form onSubmit = {this.addItem}>
-					<p>Add new todo item: </p>
-					<input ref = {(a) => this._inputElement = a}
-						placeholder = "New Todo Item">
+					<form onSubmit = {this.submitTodoList}>
+					<p>Add new todo list: </p>
+					<input listName = {this.createTodoList}
+					placeholder = "Todo List Name">
 					</input>
-					<button type = "submit">Add task</button>
+					<button type = "submit">Submit</button>
 					</form>
 				</div>
-				<TodoItems entries = {this.state.items}
-					delete = {this.deleteItem}/>
-				<div className="dropList">
-					<form>					
-					<button type = "submit">Drop Todo List</button>
-					</form>
-				</div>
+
+          		<div className="todoList">
+          		<ul>
+          		{this.state.TodoJson.map(TodoJson => 
+          			(<li key={TodoJson.id}>
+          			{"Todo List: "}{TodoJson.title}
+          			<button onClick={this.removeTodoList.bind(this, TodoJson.id)}>delete</button>
+
+          			{/* won't need this
+          			<button onClick={this.updateTodoList.bind(this, TodoJson.id, this.state.text)}>update</button>
+          			*/}
+
+          			{<TodoItem curTodo={TodoJson}/>}
+          			<p></p>
+          			</li>)
+          			)}
+
+          		</ul>
+          		</div>
+				
 			</div>
 		);
 	}
