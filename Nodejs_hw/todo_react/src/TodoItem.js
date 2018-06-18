@@ -12,8 +12,8 @@ class TodoItem extends Component {
         text: '',
         complete: false
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeTodoItem = this.changeTodoItem.bind(this);
+    this.submitTodoItem = this.submitTodoItem.bind(this);
     this.removeTodoItem = this.removeTodoItem.bind(this);
     this.updateTodoItem = this.updateTodoItem.bind(this);
   }
@@ -33,11 +33,11 @@ class TodoItem extends Component {
   }
   
 
-  handleChange = (e) => {
+  changeTodoItem = (e) => {
     this.setState({ text: e.target.value });
   }
 
-  handleSubmit = (e) => {
+  submitTodoItem = (e) => {
       console.log('url = ' + apiUrl + this.state.curTodo.id + '/items')
     axios.post(apiUrl + this.state.curTodo.id + '/items', {
             content: this.state.text,
@@ -69,7 +69,7 @@ class TodoItem extends Component {
     })
     .then(res => console.log(res))
     .catch(err => console.log(err))  
-    this.setState(function(state){return {complete:(!bool)}})
+    this.setState({complete:(!bool)})
     this.forceUpdate()
   }
   
@@ -87,10 +87,10 @@ class TodoItem extends Component {
                     <button onClick={this.updateTodoItem.bind(this, todoItem.id, todoItem.complete)}>update</button>
                 </li>
             ))}
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.submitTodoItem}>
                 <div>
                     <p></p>
-                    <input onChange={this.handleChange}
+                    <input onChange={this.changeTodoItem}
                     placeholder = "New Item"/>
                     <button>Add Todo Item</button>
                 </div>
