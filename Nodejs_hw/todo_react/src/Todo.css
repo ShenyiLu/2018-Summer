@@ -19,7 +19,7 @@
 .todoMain .todoList li {
 	color: #444;
 	background-color: rgba(15, 205, 255, .5);
-	padding: 15px;
+	padding: 5px;
 	margin-bottom: 15px;
 	border: 2px solid ;
 	border-radius: 5px;
@@ -27,7 +27,7 @@
 }
 
 ul.todoList {
-	padding: 40px;
+	padding: 5px;
 }
 
 .todoMain .todoList input {
