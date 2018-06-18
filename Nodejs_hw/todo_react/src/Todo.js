@@ -25,16 +25,14 @@ class Todo extends Component {
 		axios.get(apiUrl)
 		.then(
 			(result) => {
-				this.setState({
-					TodoJson: result.data
-				})
+				this.setState({TodoJson: result.data})
 			}
 		)
 		.catch(err => console.log(err))
 	}
 
 	createTodoList = (e) => {
-    	this.setState({ text: e.target.value });
+    	this.setState({text: e.target.value});
   	}
 
   	submitTodoList = (e) => {
@@ -46,17 +44,13 @@ class Todo extends Component {
   			res => res.json())
   		.then(
   			(result) => {
-  				this.setState({
-  					TodoJson: result
-  				});
+  				this.setState({TodoJson: result});
   			})
   		.catch(err => console.log(err))  
   	}
 
   	removeTodoList = (id) => {
-  		axios.delete(apiUrl + id, {
-  			todoId:id
-  		})
+  		axios.delete(apiUrl + id, {todoId:id})
   		.then()
   		.catch(err => console.log(err))  
 

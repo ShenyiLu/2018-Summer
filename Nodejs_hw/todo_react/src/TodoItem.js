@@ -12,7 +12,7 @@ class TodoItem extends Component {
         text: '',
         complete: false
     }
-    this.changeTodoItem = this.changeTodoItem.bind(this);
+    this.createTodoItem = this.createTodoItem.bind(this);
     this.submitTodoItem = this.submitTodoItem.bind(this);
     this.removeTodoItem = this.removeTodoItem.bind(this);
     this.updateTodoItem = this.updateTodoItem.bind(this);
@@ -33,7 +33,7 @@ class TodoItem extends Component {
   }
   
 
-  changeTodoItem = (e) => {
+  createTodoItem = (e) => {
     this.setState({ text: e.target.value });
   }
 
@@ -90,7 +90,7 @@ class TodoItem extends Component {
             <form onSubmit={this.submitTodoItem}>
                 <div>
                     <p></p>
-                    <input onChange={this.changeTodoItem}
+                    <input onChange={this.createTodoItem}
                     placeholder = "New Item"/>
                     <button>Add Todo Item</button>
                 </div>
