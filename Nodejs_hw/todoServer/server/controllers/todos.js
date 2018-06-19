@@ -43,7 +43,7 @@ module.exports = {
     .catch(error => res.status(400).send(error));
   },
   // update
-  update(req, res) {
+  update(req, res) {console.log("title, update=" + req.body.title);
   return Todo
     .findById(req.params.todoId, {
       include: [{

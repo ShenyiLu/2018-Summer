@@ -36,6 +36,7 @@ class Todo extends Component {
   	}
 
   	submitTodoList = (e) => {
+  		console.log("title=" + this.state.text);
   		axios.post(apiUrl, {
   			title: this.state.text,
   			'Content-Type': 'application/x-www-form-urlencoded'
@@ -78,7 +79,7 @@ class Todo extends Component {
 				<div className="header">
 					<form onSubmit = {this.submitTodoList}>
 					<p>Add new todo list: </p>
-					<input listName = {this.createTodoList}
+					<input onChange = {this.createTodoList}
 					placeholder = "Todo List Name">
 					</input>
 					<button type = "submit">Submit</button>
@@ -91,10 +92,6 @@ class Todo extends Component {
           			(<li key={TodoJson.id}>
           			{"Todo List: "}{TodoJson.title}
           			<button onClick={this.removeTodoList.bind(this, TodoJson.id)}>delete</button>
-
-          			{/* won't need this
-          			<button onClick={this.updateTodoList.bind(this, TodoJson.id, this.state.text)}>update</button>
-          			*/}
 
           			{<TodoItem curTodo={TodoJson}/>}
           			<p></p>
