@@ -5,6 +5,9 @@ const bodyParser = require('body-parser');
 // Set up the express app
 const app = express();
 
+const cors = require('cors');
+app.use(cors());
+
 // Log requests to the console.
 app.use(logger('dev'));
 
